@@ -1,0 +1,215 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Courier New', monospace;
+}
+
+body {
+  background: #000510;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 10px #00aaff, inset 0 0 10px rgba(0, 170, 255, 0.1); }
+  50% { box-shadow: 0 0 20px #00aaff, inset 0 0 15px rgba(0, 170, 255, 0.2); }
+}
+
+@keyframes borderGlow {
+  0%, 100% { border-color: rgba(0, 170, 255, 0.3); }
+  50% { border-color: rgba(0, 170, 255, 0.6); }
+}
+
+@keyframes textFlicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.8; }
+  94% { opacity: 1; }
+  97% { opacity: 0.9; }
+  98% { opacity: 1; }
+}
+
+.ai-hud {
+  position: fixed;
+  top: 50%;
+  right: 30px;
+  transform: translateY(-50%);
+  width: 280px;
+  background: rgba(0, 20, 40, 0.75);
+  border: 1px solid rgba(0, 170, 255, 0.3);
+  border-radius: 4px;
+  padding: 20px;
+  color: #00ddff;
+  backdrop-filter: blur(10px);
+  animation: glow 3s ease-in-out infinite, borderGlow 2s ease-in-out infinite;
+}
+
+.ai-hud::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00aaff, transparent);
+  animation: scanline 3s linear infinite;
+}
+
+.ai-hud-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0, 170, 255, 0.2);
+}
+
+.ai-icon {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #00aaff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.ai-title {
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: textFlicker 5s infinite;
+}
+
+.ai-subtitle {
+  font-size: 10px;
+  color: #0088aa;
+  letter-spacing: 1px;
+}
+
+.ai-status {
+  margin-bottom: 15px;
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(0, 170, 255, 0.1);
+}
+
+.status-label {
+  font-size: 10px;
+  color: #0088aa;
+  letter-spacing: 1px;
+}
+
+.status-value {
+  font-size: 12px;
+  color: #00ffaa;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.status-value.warning {
+  color: #ffaa00;
+}
+
+.status-value.danger {
+  color: #ff4466;
+}
+
+.ai-progress {
+  margin: 15px 0;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #0088aa;
+  margin-bottom: 5px;
+}
+
+.progress-bar {
+  height: 4px;
+  background: rgba(0, 170, 255, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #0066ff, #00aaff, #00ffaa);
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.ai-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.stat-box {
+  background: rgba(0, 100, 150, 0.3);
+  border: 1px solid rgba(0, 170, 255, 0.2);
+  padding: 8px;
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 16px;
+  font-weight: bold;
+  color: #00ddff;
+}
+
+.stat-label {
+  font-size: 8px;
+  color: #0088aa;
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+
+.scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(180deg, rgba(0, 170, 255, 0.1), transparent);
+  animation: scanline 4s linear infinite;
+  pointer-events: none;
+}
+
+.corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: #00aaff;
+  border-style: solid;
+}
+
+.corner-tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+.corner-tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+.corner-bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+.corner-br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
